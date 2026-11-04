@@ -30,6 +30,8 @@ class Game {
     this.fogColor = new THREE.Color(ZONES.meadow.fog);
     this.scene.fog = new THREE.Fog(this.fogColor, 90, 340);
     this.camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.1, 1200);
+    this.camera.fov = this.camera.aspect < 0.8 ? 72 : 58;
+    this.camera.updateProjectionMatrix();
     this.setupLights();
     this.setupSky();
 
@@ -125,6 +127,7 @@ class Game {
   }
   resize() {
     this.camera.aspect = innerWidth / innerHeight;
+    this.camera.fov = this.camera.aspect < 0.8 ? 72 : 58;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(innerWidth, innerHeight);
   }

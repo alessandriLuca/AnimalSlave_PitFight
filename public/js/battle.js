@@ -75,6 +75,19 @@ export class Battle {
     // prova varie posizioni e sceglie quella meno coperta da alberi/rocce/colline
     const w = this.g.world, c = this.center;
     let best = null, bs = Infinity;
+    if (this.g.camera.aspect < 0.95) {
+      // schermo verticale (telefono): camera alle spalle della propria creatura
+      for (const side of [1, -1, 0.4, -0.4]) {
+        for (const back of [10.5, 12.5]) {
+          const p = c.clone().addScaledVector(this.dir, -back).addScaledVector(this.perp, 3.2 * side);
+          p.y = Math.max(c.y, w.height(p.x, p.z)) + 5.2 + (back - 10.5) * 0.4;
+          let score = w.blockers(c.x, c.z, p.x, p.z) * 10 + Math.abs(Math.abs(side) - 1) * 2 + (back - 10.5) * 0.5;
+          score += Math.max(0, w.height(p.x, p.z) - c.y - 2) * 3;
+          if (score < bs) { bs = score; best = p; }
+        }
+      }
+      return best;
+    }
     for (const side of [1, -1]) {
       for (const back of [-4.4, -2, -6.5, 0]) {
         for (const dist of [9.6, 8]) {
