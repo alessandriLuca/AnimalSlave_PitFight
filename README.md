@@ -48,6 +48,16 @@ Poi apri http://localhost:8080
 
 ## Pubblicarlo su Cloudflare Pages
 
+### Opzione 0: automatica con GitHub Actions (già configurata)
+
+Il workflow `.github/workflows/deploy.yml` pubblica il sito a ogni push su `main`.
+Servono due secret del repository (Settings → Secrets and variables → Actions):
+
+- `CLOUDFLARE_ACCOUNT_ID`: l'ID account Cloudflare (dashboard → Workers & Pages, colonna a destra "Account ID")
+- `CLOUDFLARE_API_TOKEN`: token creato da https://dash.cloudflare.com/profile/api-tokens con il permesso **Account → Cloudflare Pages → Edit**
+
+Il sito sarà su `https://animalslave-pitfight.pages.dev`.
+
 ### Opzione A: dalla dashboard (consigliata)
 
 1. Vai su Cloudflare, poi **Workers & Pages**, poi **Create**, poi **Pages**, poi **Connect to Git**
