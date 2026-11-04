@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>AnimalSlave: Pit Fight</title>
+  <meta name="description" content="Gioco 3D in terza persona: cattura, allena e fai combattere 60 creature nella Fossa.">
+  <meta name="theme-color" content="#1a1030">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23e83a3a'/><rect x='5' y='46' width='90' height='8' fill='%23111'/><path d='M5 54a45 45 0 0 0 90 0z' fill='%23f4f4f4'/><circle cx='50' cy='50' r='13' fill='%23111'/><circle cx='50' cy='50' r='8' fill='%23fff'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="floatLayer"></div>
+
+    <div id="hud" class="hidden">
+      <div id="zoneName"></div>
+      <div id="topInfo"></div>
+      <canvas id="minimap" width="170" height="170"></canvas>
+      <div id="partyBar"></div>
+      <div id="prompt" class="hidden"></div>
+      <div id="toasts"></div>
+      <div id="mobileBtns">
+        <button id="btnMap" class="mbtnc">🗺️</button>
+        <button id="btnMenu" class="mbtnc">☰</button>
+        <button id="btnAct" class="mbtnc act">E</button>
+      </div>
+      <div id="joystick"><div class="knob"></div></div>
+      <div id="keysHelp">WASD muoviti · Shift corri · trascina = camera · E interagisci · Tab menu · M mappa</div>
+    </div>
+
+    <div id="battleUI" class="hidden">
+      <div id="enemyPanel" class="monPanel"></div>
+      <div id="playerPanel" class="monPanel"></div>
+      <div id="battleBottom">
+        <div id="battleLog"></div>
+        <div id="battleMenu" class="bmenu"></div>
+      </div>
+    </div>
+
+    <div id="dialog" class="hidden"></div>
+    <div id="modal" class="modal hidden"></div>
+    <div id="fade"></div>
+    <div id="title" class="hidden"></div>
+    <div id="loading"><div class="spinner"></div><div>Generazione del mondo...</div></div>
+    <noscript><div class="noscript">Serve JavaScript (e WebGL) per giocare.</div></noscript>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
