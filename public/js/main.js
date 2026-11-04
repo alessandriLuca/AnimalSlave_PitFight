@@ -178,9 +178,9 @@ class Game {
     this.onPartyChanged(true);
     await this.ui.dialog(elder, [
       `<b>${SPECIES[sid].name}</b>! Ottima scelta. Guarda come ti segue già!`,
-      'Tieni anche queste: <b>5 Sfere</b> e <b>3 Pozioni</b>. Indebolisci le creature selvatiche e lancia una Sfera dallo <b>Zaino</b> per catturarle.',
+      'Tieni anche questi: <b>5 Cristalli</b> e <b>3 Tonici</b>. Indebolisci le creature selvatiche e lancia un Cristallo dallo <b>Zaino</b> per imprigionarle.',
       'Le creature col <b style="color:#9fffa0">nome verde</b> non le hai ancora catturate. Avvicinati e premi <b>E</b> per sfidarle.',
-      'Il <b>Centro Cura</b> (tetto rosa) cura gratis la squadra, la <b>Bottega</b> (tetto blu) vende Sfere e Pozioni.',
+      'Il <b>Centro Cura</b> (tetto rosa) cura gratis la squadra, la <b>Bottega</b> (tetto blu) vende Cristalli e Tonici.',
       'Inizia dai <b>Prati</b> qui intorno, poi il <b>Bosco Sussurrante</b> a nord-ovest. Premi <b>Tab</b> per il menu e <b>M</b> per la mappa. Buona fortuna!',
     ]);
     this.save();
@@ -254,7 +254,7 @@ class Game {
       const old = MOVES[c.moves[idx]].name;
       c.moves[idx] = moveId;
       this.audio.sfx('buff');
-      await say(`1, 2 e... Puff! ${nameOf(c)} ha dimenticato ${old} e ha imparato ${mv.name}!`);
+      await say(`${nameOf(c)} ha dimenticato ${old} e al suo posto ha imparato ${mv.name}!`);
     } else await say(`${nameOf(c)} non ha imparato ${mv.name}.`);
   }
 
@@ -313,7 +313,7 @@ class Game {
         this.save();
       }
     } else if (n.kind === 'shop') {
-      await this.ui.dialog(n.name, 'Benvenuto! Sfere, pozioni... ho tutto quello che serve a un domatore!');
+      await this.ui.dialog(n.name, 'Benvenuto! Cristalli, tonici... ho tutto quello che serve a un domatore!');
       await this.ui.openShop();
     } else if (n.kind === 'elder') {
       const caught = Object.keys(d.caught).length;
@@ -330,7 +330,7 @@ class Game {
         await this.ui.dialog(t.name, t.leader ? `Il ${t.seal} è tuo. Continua così, e un giorno batterai anche Krator!` : 'Mi hai battuto in modo netto. Devo allenarmi di più!');
         return;
       }
-      if (!this.hasAlive()) { await this.ui.dialog(t.name, 'Le tue creature sono tutte esauste! Vai a curarle prima di sfidarmi.'); return; }
+      if (!this.hasAlive()) { await this.ui.dialog(t.name, 'Le tue creature sono tutte KO! Vai a curarle prima di sfidarmi.'); return; }
       if (t.pit && d.seals.length < 6) {
         await this.ui.dialog(t.name, [`Hah! Un novellino. Torna quando avrai tutti e <b>6 i Sigilli</b> dei Capi Zona. Ne hai solo ${d.seals.length}.`]);
         return;
@@ -367,7 +367,7 @@ class Game {
   }
 
   async startWild(w) {
-    if (!this.hasAlive()) { this.ui.toast('Le tue creature sono esauste! Curale al Centro Cura o a un Santuario.', '#ff6060'); return; }
+    if (!this.hasAlive()) { this.ui.toast('Le tue creature sono KO! Curale al Centro Cura o a un Santuario.', '#ff6060'); return; }
     this.state = 'battle';
     w.frozen = true; w.model.visible = false;
     const enemy = createCreature(w.sid, w.level);
@@ -417,12 +417,12 @@ class Game {
       if (t.leader && first) {
         d.seals.push(t.seal);
         this.audio.sfx('caught');
-        await this.ui.dialog(t.name, [`Incredibile... mi hai battuto!`, `Ti sei guadagnato il <b>${t.seal}</b>! 🏅 (${d.seals.length}/6)`, d.seals.length === 6 ? 'Hai tutti i Sigilli! Il Gran Maestro ti aspetta nella <b>Fossa</b>.' : 'Prendi anche questa: una <b>Super Sfera</b> x3.']);
+        await this.ui.dialog(t.name, [`Incredibile... mi hai battuto!`, `Ti sei guadagnato il <b>${t.seal}</b>! 🏅 (${d.seals.length}/6)`, d.seals.length === 6 ? 'Hai tutti i Sigilli! Il Gran Maestro ti aspetta nella <b>Fossa</b>.' : 'Prendi anche questa: <b>3 Cristalli Rari</b>.']);
         d.items.superorb = (d.items.superorb || 0) + 3;
       } else if (t.pit) {
         d.pitWins = (d.pitWins || 0) + 1;
         d.items.iperorb = (d.items.iperorb || 0) + 3;
-        await this.ui.dialog(t.name, ['Impossibile... nessuno mi aveva mai battuto!', '<b>Sei il nuovo Campione della Fossa!</b> 👑', 'Prendi queste <b>3 Iper Sfere</b>. Ti serviranno per le creature leggendarie che si nascondono ai confini del mondo.']);
+        await this.ui.dialog(t.name, ['Impossibile... nessuno mi aveva mai battuto!', '<b>Sei il nuovo Campione della Fossa!</b> 👑', 'Prendi questi <b>3 Cristalli Antichi</b>. Ti serviranno per le creature leggendarie che si nascondono ai confini del mondo.']);
         if (d.pitWins === 1) await this.ending();
       } else {
         await this.ui.dialog(t.name, 'Accidenti, sei forte! Ti meriti la vittoria.');

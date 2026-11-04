@@ -15,7 +15,7 @@ export const TYPES = {
   light:    { name: 'Luce',     color: '#f2d75a' },
 };
 
-// attaccante -> difensori su cui è superefficace (x2) / poco efficace (x0.5)
+// attaccante -> difensori su cui fa danno doppio (x2) / dimezzato (x0.5)
 const STRONG = {
   beast: ['electric'], fire: ['grass', 'ice'], water: ['fire', 'earth'], grass: ['water', 'earth', 'light'],
   electric: ['water', 'air'], earth: ['fire', 'electric', 'ice'], air: ['grass', 'beast'],
@@ -376,13 +376,13 @@ export function pol(angleDeg, r) {
 
 // --------------------------------------------------------------- OGGETTI
 export const ITEMS = {
-  orb:      { name: 'Sfera',        price: 100, desc: 'Cattura creature selvatiche.', orb: 1 },
-  superorb: { name: 'Super Sfera',  price: 300, desc: 'Cattura migliore (x1.6).', orb: 1.6 },
-  iperorb:  { name: 'Iper Sfera',   price: 800, desc: 'Cattura ottima (x2.6).', orb: 2.6 },
-  potion:   { name: 'Pozione',      price: 80,  desc: 'Cura il 50% dei PS.', heal: 0.5 },
-  superpot: { name: 'Super Pozione',price: 220, desc: 'Cura tutti i PS.', heal: 1 },
-  antidote: { name: 'Cura Totale',  price: 120, desc: 'Cura ogni problema di stato.', cure: 1 },
-  revive:   { name: 'Ravviva',      price: 450, desc: 'Rianima una creatura esausta (50% PS).', revive: 0.5 },
+  orb:      { name: 'Cristallo',          price: 100, desc: 'Imprigiona una creatura selvatica indebolita.', orb: 1 },
+  superorb: { name: 'Cristallo Raro',     price: 300, desc: 'Più potente (x1.6).', orb: 1.6 },
+  iperorb:  { name: 'Cristallo Antico',   price: 800, desc: 'Potentissimo (x2.6).', orb: 2.6 },
+  potion:   { name: 'Tonico',             price: 80,  desc: 'Cura il 50% dei PS.', heal: 0.5 },
+  superpot: { name: 'Tonico Forte',       price: 220, desc: 'Cura tutti i PS.', heal: 1 },
+  antidote: { name: 'Erba Panacea',       price: 120, desc: 'Cura ogni problema di stato.', cure: 1 },
+  revive:   { name: 'Piuma della Fenice', price: 450, desc: 'Rianima una creatura KO (50% PS).', revive: 0.5 },
 };
 
 export const STATUS = {

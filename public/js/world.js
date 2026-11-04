@@ -418,10 +418,10 @@ export class World {
     cross.add(a, b); cross.position.set(-22, 8.2, 16); cross.rotation.y = Math.PI / 2 - 0.4;
     this.scene.add(cross);
     this.animated.push((t) => { cross.rotation.y = t; });
-    // insegna negozio: sfera
-    const orb = new THREE.Mesh(GEO.sphere, toon(0x3a8cff, 0x3a8cff, 0.3)); orb.scale.setScalar(0.7); orb.position.set(22, 8.2, 16);
+    // insegna negozio: cristallo
+    const orb = new THREE.Mesh(new THREE.OctahedronGeometry(1, 0), toon(0x5ae0ff, 0x5ae0ff, 0.35)); orb.scale.set(0.6, 0.9, 0.6); orb.position.set(22, 8.2, 16);
     this.scene.add(orb);
-    this.animated.push((t) => { orb.position.y = 8.2 + Math.sin(t * 2) * 0.3; });
+    this.animated.push((t) => { orb.position.y = 8.2 + Math.sin(t * 2) * 0.3; orb.rotation.y = t; });
 
     // LA FOSSA (arena)
     const A = ARENA;

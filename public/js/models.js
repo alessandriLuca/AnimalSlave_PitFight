@@ -474,17 +474,26 @@ export function disposeModel(model) {
   });
 }
 
-// ------------------------------------------------------------- SFERA
-export function buildOrb(color = 0xe83a3a) {
+// --------------------------------------------------- CRISTALLO DI CATTURA
+// Gemma ottaedrica con anello dorato e nucleo luminoso (design originale)
+export function buildOrb(color = 0x5ae0ff) {
   const g = new THREE.Group();
-  const r = 0.22;
-  const top = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), toon(color));
-  const bot = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), toon(0xf4f4f4));
-  const band = new THREE.Mesh(new THREE.TorusGeometry(r, 0.025, 6, 20), toon(0x1a1a1a));
-  band.rotation.x = Math.PI / 2;
-  const btn = M(GEO.sphere, toon(0xffffff, 0xffffff, 0.3), 0.06, 0.06, 0.04, 0, 0, r);
-  g.add(top, bot, band, btn);
-  g.userData.btn = btn;
+  const gemMat = new THREE.MeshToonMaterial({ color, gradientMap: getGradient(), emissive: color, emissiveIntensity: 0.35, transparent: true, opacity: 0.88 });
+  const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.24, 0), gemMat);
+  gem.scale.set(0.8, 1.25, 0.8);
+  const ringMat = toon(0xe8b830, 0xe8b830, 0.15);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.025, 6, 6), ringMat);
+  ring.rotation.x = Math.PI / 2;
+  const core = new THREE.Mesh(GEO.sphere, new THREE.MeshToonMaterial({ color: 0xffffff, gradientMap: getGradient(), emissive: 0xffffff, emissiveIntensity: 0.6 }));
+  core.scale.setScalar(0.07);
+  for (const s of [-1, 1]) {
+    const tip = new THREE.Mesh(GEO.cone, ringMat);
+    tip.scale.set(0.035, 0.09, 0.035); tip.position.y = s * 0.33; if (s < 0) tip.rotation.x = Math.PI;
+    g.add(tip);
+  }
+  g.add(gem, ring, core);
+  g.scale.setScalar(1.5);
+  g.userData.btn = core;
   return g;
 }
 

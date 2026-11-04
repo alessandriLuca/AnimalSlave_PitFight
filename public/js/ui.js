@@ -60,7 +60,7 @@ export class UI {
     const zt = `${Z.name} <small>Lv ${lr[0]}-${lr[1]}</small>`;
     if (this._zone !== zt) { $('#zoneName').innerHTML = zt; this._zone = zt; }
     const caught = Object.keys(d.caught).length;
-    const info = `<span title="Monete">🪙 ${d.gold}</span><span title="Sigilli">🏅 ${d.seals.length}/6</span><span title="Bestiario">📖 ${caught}/${DEX.length}</span><span title="Sfere">🔴 ${(d.items.orb || 0) + (d.items.superorb || 0) + (d.items.iperorb || 0)}</span>`;
+    const info = `<span title="Monete">🪙 ${d.gold}</span><span title="Sigilli">🏅 ${d.seals.length}/6</span><span title="Bestiario">📖 ${caught}/${DEX.length}</span><span title="Cristalli">💎 ${(d.items.orb || 0) + (d.items.superorb || 0) + (d.items.iperorb || 0)}</span>`;
     if (this._info !== info) { $('#topInfo').innerHTML = info; this._info = info; }
     const key = d.party.map((c) => `${c.sid}${c.level}${c.hp}${c.status}`).join('|');
     if (this._party !== key) {
@@ -366,7 +366,7 @@ export class UI {
       <p><b>E</b> interagisci / sfida creature · <b>Tab / I</b> menu · <b>M</b> mappa · <b>Esc</b> chiudi</p>
       <p>In battaglia: <b>1-4</b> scegli, <b>Esc</b> indietro, <b>Spazio</b> salta testo.</p>
       <h3>Come si gioca</h3>
-      <p>Avvicinati alle creature selvatiche (nome verde = non ancora catturata) e premi <b>E</b> per sfidarle. Indeboliscile e lancia una Sfera dallo Zaino per catturarle.
+      <p>Avvicinati alle creature selvatiche (nome verde = non ancora catturata) e premi <b>E</b> per sfidarle. Indeboliscile e lancia un Cristallo dallo Zaino per catturarle.
       Sconfiggi i 6 Capi Zona per ottenere i Sigilli e sfida il Gran Maestro nella <b>Fossa</b> al centro del villaggio. Completa il Bestiario di ${DEX.length} creature!</p>
       <p>Tempo di gioco: ${Math.floor(g.data.playTime / 3600)}h ${Math.floor((g.data.playTime % 3600) / 60)}m</p></div></div>`;
     $('#sSave', body).onclick = () => { g.save(); this.toast('Partita salvata!', '#7aff8a'); };
@@ -442,8 +442,8 @@ export class UI {
         <div class="ptypes">${sp.types.map(typeBadge).join(' ')}</div>
         <div class="bar hp"><i style="width:${p * 100}%;background:${hpColor(p)}"></i>${mine ? `<span>${c.hp}/${mx}</span>` : ''}</div>
         ${mine ? `<div class="bar xp"><i style="width:${xpProgress(c) * 100}%"></i></div>` : ''}
-        ${!mine && !b.wild ? `<div class="balls">${b.enemyTeam.map((m) => `<i class="${m.hp > 0 ? '' : 'out'}"></i>`).join('')}</div>` : ''}
-        ${mine ? `<div class="balls">${this.g.data.party.map((m) => `<i class="${m.hp > 0 ? '' : 'out'}"></i>`).join('')}</div>` : ''}`;
+        ${!mine && !b.wild ? `<div class="gems">${b.enemyTeam.map((m) => `<i class="${m.hp > 0 ? '' : 'out'}"></i>`).join('')}</div>` : ''}
+        ${mine ? `<div class="gems">${this.g.data.party.map((m) => `<i class="${m.hp > 0 ? '' : 'out'}"></i>`).join('')}</div>` : ''}`;
     };
     $('#enemyPanel').innerHTML = panel(b.E, false);
     $('#playerPanel').innerHTML = panel(b.P, true);
@@ -486,7 +486,7 @@ export class UI {
         mon.moves.forEach((id, i) => {
           const mv = MOVES[id];
           const eff = mv.kind === 'dmg' ? effectiveness(mv.type, etypes) : 1;
-          const tag = mv.kind !== 'dmg' ? `<em>${mvDesc(mv)}</em>` : eff > 1 ? '<em class="sup">Superefficace!</em>' : eff < 1 ? '<em class="weak">Poco efficace</em>' : '';
+          const tag = mv.kind !== 'dmg' ? `<em>${mvDesc(mv)}</em>` : eff > 1 ? '<em class="sup">Punto debole!</em>' : eff < 1 ? '<em class="weak">Resistito</em>' : '';
           const btn = el('button', 'mbtn', `<b>${i + 1}</b> <span class="mname">${mv.name}</span>${tag}<small>${TYPES[mv.type].name} · ${mv.power ? 'Pot ' + mv.power : '—'} · Prec ${mv.acc}</small>`);
           btn.style.setProperty('--tc', TYPES[mv.type].color);
           btn.onclick = () => finish({ type: 'move', move: id });

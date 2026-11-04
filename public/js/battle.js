@@ -200,7 +200,7 @@ export class Battle {
     if (this.E.mon && this.E.mon.hp <= 0 && !this.E.fainted) {
       this.E.fainted = true;
       await this.faintAnim(this.E);
-      await this.say(`${this.label(this.E)} è esausto!`);
+      await this.say(`${this.label(this.E)} va KO!`);
       await this.awardXp(this.E.mon);
       const next = this.enemyTeam.find((c) => c.hp > 0);
       if (next && !this.wild) {
@@ -215,7 +215,7 @@ export class Battle {
     if (this.P.mon && this.P.mon.hp <= 0 && !this.P.fainted) {
       this.P.fainted = true;
       await this.faintAnim(this.P);
-      await this.say(`${nameOf(this.P.mon)} è esausto!`);
+      await this.say(`${nameOf(this.P.mon)} va KO!`);
       this.participants.delete(this.P.mon.uid);
       if (!this.party.some((c) => c.hp > 0)) { await this.finish('lose'); return true; }
       const idx = await this.ui.battleChooseMember(this, true);
@@ -281,9 +281,9 @@ export class Battle {
       this.hitAnim(O, eff, color, dmg, crit);
       this.hud();
       await this.fx.wait(0.35);
-      if (crit) await this.say('Brutto colpo!', 0.6);
-      if (eff > 1) await this.say('È superefficace!', 0.7);
-      else if (eff < 1) await this.say('Non è molto efficace...', 0.7);
+      if (crit) await this.say('Colpo critico!', 0.6);
+      if (eff > 1) await this.say('Ha colpito il punto debole!', 0.7);
+      else if (eff < 1) await this.say('Il colpo viene in parte assorbito...', 0.7);
       if (move.drain && mon.hp > 0) {
         const h = Math.max(1, Math.floor(dmg * move.drain));
         mon.hp = Math.min(maxHp(mon), mon.hp + h);
@@ -429,8 +429,8 @@ export class Battle {
 
   async throwOrb(id, it) {
     const E = this.E, mon = E.mon;
-    await this.say(`Lanci una ${it.name}!`, 0.5);
-    const orb = buildOrb(id === 'orb' ? 0xe83a3a : id === 'superorb' ? 0x3a7ae8 : 0x9a3ae8);
+    await this.say(`Lanci un ${it.name}!`, 0.5);
+    const orb = buildOrb(id === 'orb' ? 0x5ae0ff : id === 'superorb' ? 0xb07aff : 0xffc640);
     this.g.scene.add(orb); this.objects.push(orb);
     const from = this.g.player.pos.clone().setY(this.g.player.pos.y + 1.6);
     const to = this.mid(E);
@@ -467,7 +467,7 @@ export class Battle {
       this.fx.sparkle(orb.position, 0xffe070, 24, 0.8);
       this.fx.burst(orb.position, 0xffe070, 20, 4, 0.1);
       orb.userData.btn.material.emissive.setHex(0xffe070);
-      await this.say(`Preso! ${sp.name} è stato catturato!`, 1.3);
+      await this.say(`${sp.name} è stato imprigionato nel cristallo! Catturato!`, 1.3);
       const where = this.g.addCreature(mon);
       if (where === 'box') await this.say(`La squadra è piena: ${sp.name} è stato mandato al Box.`, 1);
       this.outcome = 'caught';

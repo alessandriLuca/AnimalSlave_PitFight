@@ -75,9 +75,9 @@ small { opacity: 0.8; }
 #playerPanel { right: 16px; bottom: 190px; border-color: rgba(255, 208, 64, .5); }
 .pname { font-size: 19px; font-weight: 700; }
 .ptypes { margin-top: 3px; }
-.balls { display: flex; gap: 4px; margin-top: 7px; }
-.balls i { width: 11px; height: 11px; border-radius: 50%; background: linear-gradient(#e83a3a 45%, #111 45% 55%, #f4f4f4 55%); }
-.balls i.out { filter: grayscale(1) brightness(.4); }
+.gems { display: flex; gap: 6px; margin-top: 7px; padding-left: 2px; }
+.gems i { width: 9px; height: 9px; transform: rotate(45deg); background: linear-gradient(135deg, #bff6ff, #3ac8f0); box-shadow: 0 0 6px rgba(90,224,255,.7); }
+.gems i.out { filter: grayscale(1) brightness(.4); box-shadow: none; }
 #battleBottom { position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 12px; padding: 12px; background: linear-gradient(transparent, rgba(10,6,24,.75) 30%); }
 #battleLog { flex: 1; min-height: 150px; background: var(--panel); border: 2px solid var(--line); border-radius: var(--radius); padding: 16px 20px; font-size: 21px; line-height: 1.4; cursor: pointer; }
 #battleLog.talk::after { content: ' ▸'; opacity: .6; }
