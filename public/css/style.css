@@ -12,9 +12,9 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
-  font-family: 'Fredoka', 'Trebuchet MS', system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  font-family: 'Fredoka', 'Trebuchet MS', system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
 #app { position: fixed; inset: 0; }
-#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
 .hidden { display: none !important; }
 button { font-family: inherit; }
 small { opacity: 0.8; }
@@ -115,7 +115,8 @@ small { opacity: 0.8; }
 .btn.alt { background: linear-gradient(#4a4a6a, #34344a); }
 
 /* ------------------------------------------------------------- MODALE */
-.modal { position: absolute; inset: 0; z-index: 15; display: flex; align-items: center; justify-content: center; background: rgba(8,4,20,.55); backdrop-filter: blur(3px); }
+.modal { position: absolute; inset: 0; z-index: 15; display: flex; align-items: safe center; justify-content: center; background: rgba(8,4,20,.55); backdrop-filter: blur(3px); overflow-y: auto; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+.modal *, .chooser * { touch-action: pan-y; }
 .menu { width: min(1040px, calc(100vw - 20px)); height: min(680px, calc(100vh - 20px)); background: var(--panel2); border: 2px solid var(--line); border-radius: 18px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
 .tabs { display: flex; gap: 4px; padding: 10px 10px 0; background: rgba(0,0,0,.25); flex-wrap: wrap; }
 .tab { background: transparent; color: var(--muted); border: none; padding: 10px 16px; font-size: 16px; font-weight: 600; border-radius: 10px 10px 0 0; cursor: pointer; }
@@ -184,7 +185,7 @@ small { opacity: 0.8; }
 .help h3 { color: #fff; margin: 14px 0 4px; }
 .help b { color: #fff; }
 
-.chooser { position: absolute; inset: 0; z-index: 30; background: rgba(8,4,20,.7); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; }
+.chooser { position: absolute; inset: 0; z-index: 30; overflow-y: auto; background: rgba(8,4,20,.7); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; }
 .ctitle { font-size: 22px; font-weight: 700; text-align: center; max-width: 700px; line-height: 1.5; }
 .clist { width: min(520px, 100%); max-height: 70vh; overflow-y: auto; background: var(--panel2); padding: 10px; border-radius: 16px; border: 2px solid var(--line); }
 
@@ -231,19 +232,64 @@ small { opacity: 0.8; }
 
 /* ------------------------------------------------------------ MOBILE */
 @media (max-width: 760px) {
+  .starter { padding: 8px; width: 100%; }
+  .starter h2 { font-size: 22px; margin: 8px 0 12px; }
+  .cards { flex-wrap: nowrap; gap: 6px; }
+  .card { width: auto; flex: 1; min-width: 0; padding: 8px 4px; border-radius: 14px; }
+  .card:hover { transform: none; }
+  .card img { width: 100%; height: auto; max-width: 130px; }
+  .card h3 { font-size: 15px; }
+  .card p { display: none; }
+  .card .btn { font-size: 13px; padding: 10px 4px; width: 100%; }
+  .card .btn b { display: none; }
+  .menu { height: calc(100vh - 12px); height: calc(100dvh - 12px); }
+  .tab { padding: 8px 9px; font-size: 13px; }
+  .menuBody { padding: 8px; overflow-y: auto; }
+  .split { display: flex; flex-direction: column; flex: none; overflow: visible; min-height: auto; }
+  .split > .right { order: -1; flex: none; overflow: visible; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .split > .list, .split > .grid { width: 100%; max-height: none; overflow: visible; flex: none; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+  .cell img { width: 58px; height: 58px; }
+  .dhead { flex-wrap: wrap; }
+  .bigmap { flex-direction: column; align-items: center; }
+  .bigmap canvas { width: 100%; height: auto; }
+  .legend { flex-direction: row; flex-wrap: wrap; }
+  .seals { grid-template-columns: 1fr 1fr; } .seals h3 { grid-column: span 2; }
+  .shop .item .btn { flex: 1; }
+  .evoimg { width: 200px; height: 200px; } .evotext { font-size: 19px; padding: 0 12px; }
+  #dialog { bottom: 10px; padding: 14px 16px 16px; }
+  .dchoices .btn { flex: 1 1 40%; }
+}
+@media (max-width: 760px) {
   #minimap { width: 110px; height: 110px; }
   #zoneName { font-size: 16px; }
   #topInfo { top: 40px; max-width: calc(100vw - 140px); } #topInfo span { font-size: 12px; padding: 3px 7px; }
   .pslot { width: 46px; height: 54px; } .pslot img { width: 46px; height: 46px; }
   #prompt { font-size: 14px; bottom: 80px; }
-  .monPanel { width: 210px; padding: 8px 10px; } .pname { font-size: 15px; }
-  #playerPanel { bottom: auto; top: 16px; right: 12px; } #enemyPanel { top: 16px; left: 12px; }
+  .monPanel { width: calc(50% - 14px); padding: 7px 9px; } .pname { font-size: 14px; } .pname small { font-size: 11px; }
+  #playerPanel { bottom: auto; top: 10px; right: 8px; } #enemyPanel { top: 10px; left: 8px; }
+  .type { font-size: 10px; padding: 0 6px; }
+  .mbtn { min-height: 54px; padding: 6px 8px; } .mbtn .mname { font-size: 15px; } .mbtn small { font-size: 10px; }
   #battleBottom { flex-direction: column; }
   #battleLog { min-height: 70px; font-size: 16px; padding: 10px 14px; }
   .bmenu { width: 100%; }
   .bbtn { min-height: 54px; font-size: 18px; }
-  .split { flex-direction: column; } .split > .list, .split > .grid { width: 100%; max-height: 40%; }
   .dtext { font-size: 16px; }
   .moves, .baglist { grid-template-columns: 1fr; }
   .bigp { width: 100px; height: 100px; }
+}
+
+/* telefono in orizzontale */
+@media (max-height: 500px) {
+  #battleBottom { padding: 6px; gap: 6px; }
+  #battleLog { min-height: 0; font-size: 15px; padding: 8px 12px; }
+  .bbtn { min-height: 40px; font-size: 16px; }
+  .mbtn { min-height: 42px; padding: 4px 8px; } .mbtn .mname { font-size: 14px; } .mbtn small { display: none; }
+  .monPanel { width: 230px; padding: 6px 10px; } .pname { font-size: 14px; }
+  #playerPanel { bottom: auto; top: 8px; right: 8px; } #enemyPanel { top: 8px; left: 8px; }
+  #partyBar .pslot { width: 44px; height: 50px; } .pslot img { width: 44px; height: 44px; }
+  #minimap { width: 100px; height: 100px; }
+  #mobileBtns { bottom: 12px; flex-direction: row; }
+  .card p { display: none; } .card img { width: 110px; height: 110px; } .starter h2 { font-size: 22px; margin: 4px 0 8px; }
+  .dtext { font-size: 15px; min-height: 0; }
 }

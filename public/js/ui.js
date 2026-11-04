@@ -279,7 +279,8 @@ export class UI {
       if (k < imgs.length) requestAnimationFrame(step);
     };
     step();
-    grid.children[sel]?.scrollIntoView({ block: 'nearest' });
+    if (innerWidth > 760) grid.children[sel]?.scrollIntoView({ block: 'nearest' });
+    else body.scrollTop = 0;
     const sp = SPECIES[DEX[sel]];
     const st = d.caught[sp.id] ? 'caught' : d.seen[sp.id] ? 'seen' : 'unk';
     const where = sp.zones.length ? sp.zones.map((z) => ZONES[z].name).join(', ') : sp.rarity === 'legendary' ? 'Luogo leggendario: ???' : sp.rarity === 'starter' ? 'Ricevuto dalla Nonna Ortensia' : 'Solo tramite evoluzione';
